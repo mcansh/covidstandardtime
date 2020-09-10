@@ -1,11 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import { NextPage } from 'next';
+import { differenceInDays, format } from 'date-fns';
 
-const Title = styled.h1`
-  font-size: 10rem;
-  color: ${props => props.theme.primary};
-`;
+import { addOrdinalSuffix } from '~/utils/add-ordinal-suffix';
 
-const Index = () => <Title>Hello World</Title>;
+const Index: NextPage = () => {
+  const now = new Date();
+  const march = new Date(2020, 2, 1);
+  const weekday = format(now, 'eeee');
+  return (
+    <p>
+      Today is {weekday}, March {addOrdinalSuffix(differenceInDays(now, march))}
+      , 2020
+    </p>
+  );
+};
 
 export default Index;
