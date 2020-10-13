@@ -9,6 +9,7 @@ module.exports = {
           'next.config.js',
           'prettier.config.js',
           'lint-staged.config.js',
+          'tailwind.config.js',
         ],
       },
     ],
