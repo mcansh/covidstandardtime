@@ -4,6 +4,5 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly VERSION: string;
-    readonly BUILD_ID: string;
   }
 }
