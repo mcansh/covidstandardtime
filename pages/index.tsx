@@ -30,7 +30,6 @@ const Index: NextPage = () => {
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#fff" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2d89ef" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="twitter:card" content="summary" />
         <meta
