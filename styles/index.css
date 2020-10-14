@@ -9,9 +9,18 @@
   src: url('/fonts/Inter-roman-latin.var.woff2') format('woff2');
 }
 
+:root {
+  color-scheme: light dark;
+}
+
 html {
   @apply antialiased;
   text-size-adjust: 100%;
+}
+
+body {
+  @apply dark:bg-black;
+  @apply dark:text-white;
 }
 
 html,
