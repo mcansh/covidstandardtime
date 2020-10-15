@@ -1,13 +1,9 @@
 import React from 'react';
-import { NextPage, PageConfig } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
 import { differenceInDays, format } from 'date-fns';
 
 import { addOrdinalSuffix } from '~/utils/add-ordinal-suffix';
-
-export const config: PageConfig = {
-  unstable_runtimeJS: false,
-};
 
 const Index: NextPage = () => {
   const now = new Date();
