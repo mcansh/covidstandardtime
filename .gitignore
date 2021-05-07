@@ -8,3 +8,5 @@ coverage
 .cache
 server/build
 public/build
+sam.json
+sam.yaml
