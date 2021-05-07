@@ -4,8 +4,7 @@ node_modules
 .next
 coverage
 .eslintcache
-.vercel
-public/sw.js
-public/sw.js.map
-public/workbox-*.js
-public/workbox-*.js.map
+.env
+.cache
+server/build
+public/build

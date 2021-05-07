@@ -1,19 +1,39 @@
-import React from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
-import { differenceInDays, format } from 'date-fns';
+import * as React from 'react';
+import type { LinksFunction, LoaderFunction, RouteComponent } from 'remix';
+import { Meta, Links, Scripts, useRouteData, LiveReload } from 'remix';
+import { Outlet, useLocation } from 'react-router-dom';
+import * as Fathom from 'fathom-client';
 
-import { addOrdinalSuffix } from '~/utils/add-ordinal-suffix';
+import stylesUrl from './styles/global.css';
+import type { ErrorBoundaryComponent } from '@remix-run/react/routeModules';
 
-const Index: NextPage = () => {
-  const now = new Date();
-  const march = new Date(2020, 2, 1);
-  const weekday = format(now, 'eeee');
-  const diff = differenceInDays(now, march);
+let links: LinksFunction = () => {
+  return [{ rel: 'stylesheet', href: stylesUrl }];
+};
+
+function Document({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    Fathom.load('KACCORGG', {
+      excludedDomains: ['localhost'],
+      url: 'https://kiwi.mcan.sh/script.js',
+    });
+  }, []);
+
+  React.useEffect(() => {
+    Fathom.trackPageview({
+      url: location.pathname,
+    });
+  }, [location.pathname]);
 
   return (
-    <>
-      <Head>
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <Meta />
+        <Links />
         <title>Covid Standard Time</title>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -75,17 +95,38 @@ const Index: NextPage = () => {
           href="/favicon-16x16.png"
         />
         <meta name="application-name" content="Covid Standard Time" />
-      </Head>
-      <div className="flex items-center justify-center h-full">
-        <h1 className="px-4 text-2xl font-medium text-center sm:px-0 sm:text-3xl">
-          Today is {weekday},{' '}
-          <span className="whitespace-no-wrap sm:whitespace-normal">
-            March {addOrdinalSuffix(diff)}, 2020
-          </span>
-        </h1>
-      </div>
-    </>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
+      </body>
+    </html>
+  );
+}
+
+const App: RouteComponent = () => {
+  return (
+    <Document>
+      <Outlet />
+    </Document>
   );
 };
 
-export default Index;
+const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+  return (
+    <Document>
+      <h1>App Error</h1>
+      <pre>{error.message}</pre>
+      <p>
+        Replace this UI with what you want users to see when your app throws
+        uncaught errors.
+      </p>
+    </Document>
+  );
+};
+
+export default App;
+export { ErrorBoundary, links };
